@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ product.name }}</title>
+  </head>
+  <body>
+    <h1>{{ product.name }}</h1>
+
+    <img src="{{ product.image }}" alt="{{ product.name }}" width="300" />
+
+    <p>{{ product.short_description }}</p>
+
+    <p>Price: ${{ product.price }}</p>
+
+    <p>Category: {{ product.category }}</p>
+
+    <p>Subcategory: {{ product.subcategory }}</p>
+
+    <p>Brand: {{ product.brand }}</p>
+
+    <!-- Tabs -->
+    <div>
+      <button onclick="showTab('details')">Details</button>
+      <button onclick="showTab('reviews')">Review</button>
+    </div>
+
+    <!-- Details tab -->
+    <div id="details">
+      <h2>Details</h2>
+
+      <p>Product name: {{ product.name }}</p>
+      <p>Category: {{ product.category }}</p>
+      <p>Subcategory: {{ product.subcategory }}</p>
+      <p>Brand: {{ product.brand }}</p>
+      <p>Description: {{ product.short_description }}</p>
+      <p>Price: ${{ product.price }}</p>
+    </div>
+
+    <!-- Reviews tab -->
+    <div id="reviews" style="display: none">
+      <h2>Reviews</h2>
+
+      {% for review in product.reviews.all %}
+
+      <div>
+        <h3>{{ review.reviewer_name }}</h3>
+        <p>Rating: {{ review.rating }}/5</p>
+        <p>{{ review.text }}</p>
+      </div>
+
+      <hr />
+
+      {% empty %}
+
+      <p>No reviews yet.</p>
+
+      {% endfor %}
+    </div>
+
+    <br />
+
+    <a href="{% url 'product-list' %}">Back to products</a>
+
+    <script>
+      function showTab(tabName) {
+        const details = document.getElementById("details");
+        const reviews = document.getElementById("reviews");
+
+        if (tabName === "details") {
+          details.style.display = "block";
+          reviews.style.display = "none";
+        } else {
+          details.style.display = "none";
+          reviews.style.display = "block";
+        }
+      }
+    </script>
+  </body>
+</html>
+
+<!-- <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>{{ product.name }}</h1>
+
+    <img src="{{ product.image }}" alt="{{ product.name }}" width="300" />
+
+    <p>{{ product.short_description }}</p>
+
+    <p>Price: ${{ product.price }}</p>
+
+    <p>Category: {{ product.category }}</p>
+
+    <p>Subcategory: {{ product.subcategory }}</p>
+
+    <p>Brand: {{ product.brand }}</p>
+
+    <hr />
+
+    <h2>Reviews</h2>
+
+    {% for review in product.reviews.all %}
+
+    <div>
+      <h3>{{ review.reviewer_name }}</h3>
+
+      <p>Rating: {{ review.rating }}/5</p>
+
+      <p>{{ review.text }}</p>
+    </div>
+
+    <hr />
+
+    {% empty %}
+
+    <p>No reviews yet.</p>
+
+    {% endfor %}
+
+    <a href="{% url 'product-list' %}">Back to products</a>
+  </body>
+</html> -->
