@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Shopping Cart</h1>
+
+    {% for item in cart_items %}
+
+    <div>
+      <h2>{{ item.product.name }}</h2>
+
+      <img
+        src="{{ item.product.image }}"
+        alt="{{ item.product.name }}"
+        width="150"
+      />
+
+      <p>Price: ${{ item.product.price }}</p>
+
+      <p>
+        Quantity: {{ item.quantity }}
+
+        <a href="{% url 'decrease-cart' item.product.id %}">
+          <button type="button">−</button>
+        </a>
+
+        <a href="{% url 'increase-cart' item.product.id %}">
+          <button type="button">+</button>
+        </a>
+      </p>
+
+      <p>Item total: ${{ item.item_total }}</p>
+
+      <a href="{% url 'remove-from-cart' item.product.id %}">
+        <button type="button">Remove</button>
+      </a>
+    </div>
+
+    <hr />
+
+    {% empty %}
+
+    <p>Your cart is empty.</p>
+
+    {% endfor %}
+
+    <h2>Total: ${{ total_price }}</h2>
+
+    <a href="{% url 'product-list' %}"> Continue shopping </a>
+  </body>
+</html>

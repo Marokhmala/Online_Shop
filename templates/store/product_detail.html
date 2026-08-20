@@ -6,47 +6,58 @@
     <title>{{ product.name }}</title>
   </head>
   <body>
+    <a href="{% url 'product-list' %}"> ← Back to products </a>
+
     <h1>{{ product.name }}</h1>
 
-    <img src="{{ product.image }}" alt="{{ product.name }}" width="300" />
-
-    <p>{{ product.short_description }}</p>
-
-    <p>Price: ${{ product.price }}</p>
-
-    <p>Category: {{ product.category }}</p>
-
-    <p>Subcategory: {{ product.subcategory }}</p>
-
-    <p>Brand: {{ product.brand }}</p>
-
-    <!-- Tabs -->
     <div>
-      <button onclick="showTab('details')">Details</button>
-      <button onclick="showTab('reviews')">Review</button>
+      <img src="{{ product.image }}" alt="{{ product.name }}" width="400" />
+
+      <div>
+        <p>
+          <strong>Price:</strong>
+          ${{ product.price }}
+        </p>
+
+        <p>
+          <strong>Rating:</strong>
+          {{ product.average_rating|default:"No ratings yet" }}
+        </p>
+
+        <p>{{ product.short_description }}</p>
+
+        <a href="{% url 'add-to-cart' product.id %}">
+          <button type="button">Add to Cart</button>
+        </a>
+
+        <button type="button">Write a Review</button>
+      </div>
     </div>
 
-    <!-- Details tab -->
-    <div id="details">
+    <hr />
+
+    <div>
+      <button type="button">Details</button>
+
+      <button type="button">Reviews</button>
+    </div>
+
+    <div>
       <h2>Details</h2>
 
-      <p>Product name: {{ product.name }}</p>
-      <p>Category: {{ product.category }}</p>
-      <p>Subcategory: {{ product.subcategory }}</p>
-      <p>Brand: {{ product.brand }}</p>
-      <p>Description: {{ product.short_description }}</p>
-      <p>Price: ${{ product.price }}</p>
+      <p>{{ product.description }}</p>
     </div>
 
-    <!-- Reviews tab -->
-    <div id="reviews" style="display: none">
+    <div>
       <h2>Reviews</h2>
 
-      {% for review in product.reviews.all %}
+      {% for review in reviews %}
 
       <div>
         <h3>{{ review.reviewer_name }}</h3>
-        <p>Rating: {{ review.rating }}/5</p>
+
+        <p>Rating: {{ review.rating }} / 5</p>
+
         <p>{{ review.text }}</p>
       </div>
 
@@ -58,25 +69,6 @@
 
       {% endfor %}
     </div>
-
-    <br />
-
-    <a href="{% url 'product-list' %}">Back to products</a>
-
-    <script>
-      function showTab(tabName) {
-        const details = document.getElementById("details");
-        const reviews = document.getElementById("reviews");
-
-        if (tabName === "details") {
-          details.style.display = "block";
-          reviews.style.display = "none";
-        } else {
-          details.style.display = "none";
-          reviews.style.display = "block";
-        }
-      }
-    </script>
   </body>
 </html>
 

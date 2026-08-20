@@ -27,4 +27,3 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('reviewer_name', 'product', 'rating')
-
